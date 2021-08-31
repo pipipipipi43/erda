@@ -161,6 +161,19 @@ func ConvertToGraphPipelineYml(data []byte) (*apistructs.PipelineYml, error) {
 			}
 		}
 	}
+
+	triggers := pipelineYml.Spec().Trigger
+	var pipelineTriggers []*apistructs.PipelineTrigger
+	if triggers != nil {
+		for _, trigger := range triggers {
+			eventName := trigger.On
+			filter := trigger.Filter
+			if eventName != "" && filter != nil {
+				pipelineTriggers = append(pipelineTriggers, &apistructs.PipelineTrigger{On: eventName, Filter: filter})
+			}
+		}
+	}
+
 	result := &apistructs.PipelineYml{
 		Version:     pipelineYml.Spec().Version,
 		Envs:        pipelineYml.Spec().Envs,
@@ -169,6 +182,7 @@ func ConvertToGraphPipelineYml(data []byte) (*apistructs.PipelineYml, error) {
 		Params:      pipelineParams,
 		Outputs:     pipelineOutputs,
 		On:          on,
+		Trigger:     pipelineYml.Spec().Trigger,
 	}
 
 	var lifecycle []*apistructs.NetworkHookInfo
