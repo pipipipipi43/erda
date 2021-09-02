@@ -34,6 +34,7 @@ import (
 // 1. 使用 bundle 调用时，如果有用户信息，需要在 req.UserID 字段赋值
 func (b *Bundle) CreatePipeline(req interface{}) (*apistructs.PipelineDTO, error) {
 	host, err := b.urls.Pipeline()
+	host = "127.0.0.1:3082"
 	if err != nil {
 		return nil, err
 	}

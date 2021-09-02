@@ -12,23 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package trigger
 
 import (
-	"github.com/erda-project/erda-infra/base/servicehub"
-	"github.com/erda-project/erda/pkg/common"
-
-	// providers and modules
-	_ "github.com/erda-project/erda-infra/providers/mysqlxorm"
-	_ "github.com/erda-project/erda-infra/providers/serviceregister"
-	_ "github.com/erda-project/erda/modules/pipeline"
-	_ "github.com/erda-project/erda/modules/pipeline/aop"
-	_ "github.com/erda-project/erda/modules/pipeline/providers/cms"
-	_ "github.com/erda-project/erda/modules/pipeline/providers/trigger"
+	"context"
+	"github.com/erda-project/erda-proto-go/core/pipeline/trigger/pb"
 )
 
-func main() {
-	common.Run(&servicehub.RunOptions{
-		ConfigFile: "conf/pipeline/pipeline.yaml",
-	})
+type ConfigManager interface {
+	// RunPipelinesByTrigger run pipeline by trigger
+	RunPipelinesByTrigger(ctx context.Context, req *pb.PipelineTriggerRequest) (*pb.PipelineTriggerResponse, error)
 }

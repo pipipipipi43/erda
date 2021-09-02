@@ -31,6 +31,7 @@ import (
 
 func (s *PipelineSvc) CreateV2(req *apistructs.PipelineCreateRequestV2) (*spec.Pipeline, error) {
 	// validate
+	req.UserID = "2"
 	if err := s.validateCreateRequest(req); err != nil {
 		return nil, err
 	}

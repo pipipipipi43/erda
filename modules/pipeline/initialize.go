@@ -129,7 +129,7 @@ func (p *provider) do() (*httpserver.Server, error) {
 	pipelineSvc := pipelinesvc.New(appSvc, crondSvc, actionAgentSvc, extMarketSvc, pipelineCronSvc,
 		permissionSvc, queueManage, dbClient, bdl, publisher, engine, js, etcdctl)
 	pipelineSvc.WithCmsService(p.CmsService)
-
+	p.triggerService = pipelineSvc
 	// todo resolve cycle import here through better module architecture
 	pipelineFun := &reconciler.PipelineSvcFunc{
 		CronNotExecuteCompensate:                pipelineSvc.CronNotExecuteCompensateById,

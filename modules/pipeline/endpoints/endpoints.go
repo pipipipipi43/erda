@@ -66,7 +66,6 @@ func New(options ...Option) *Endpoints {
 	for _, op := range options {
 		op(e)
 	}
-
 	return e
 }
 

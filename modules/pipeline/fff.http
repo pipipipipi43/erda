@@ -1,0 +1,11 @@
+POST http://localhost:3082/api/triggers
+User-ID: 2
+Content-Type: application/json
+Internal-Client: true
+
+{
+  "eventName": "git",
+  "label": {
+    "AppID":"23","Branch":"master","Project":"-sg123"
+  }
+}
