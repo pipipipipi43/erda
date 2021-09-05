@@ -1,0 +1,29 @@
+POST http://localhost:3082/api/triggers/actions/run
+User-ID: 2
+Org-ID: 1
+Content-Type: application/json
+Internal-Client: true
+
+{
+  "eventName": "git_on",
+  "label": {"appID":"12","type":"BUG","ddasdasd": "xxxx","fdvvdvv": "wcnm"}
+}
+
+### pipeline definitions save
+POST http://localhost:3082/api/pipeline-definitions/actions/process
+User-ID: 2
+Content-Type: application/json
+Internal-Client: true
+
+{
+  "versionLock": 4,
+  "pipelineSource":"dice",
+  "pipelineYmlName":"3/TEST/develop/pipeline.yml",
+  "pipelineYml":"version: \"1.1\"\ntriggers:\n  - \"on\": issue\n    filter:\n      branch: master\n      type: TASK\n  - \"on\": git_on\n    filter:\n      appID: \"12\"\n      type: BUG\n  - \"on\": git_push\n    filter:\n      branch: develop\n      projectID: \"234\"\nstages:\n  - stage:\n      - custom-script:\n          alias: custom-script\n          description: 运行自定义命令\n          version: \"1.0\"\n          commands:\n            - echo 123"
+}
+
+### pipeline definitions version
+GET http://localhost:3082/api/pipeline-definitions/actions/version?pipelineSource=dice&pipelineYmlName=3/TEST/develop/pipeline.yml
+User-ID: 2
+Content-Type: application/json
+Internal-Client: true
