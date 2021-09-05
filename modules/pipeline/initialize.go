@@ -142,6 +142,8 @@ func (p *provider) do() error {
 		permissionSvc, queueManage, dbClient, bdl, publisher, engine, js, etcdctl)
 	pipelineSvc.WithCmsService(p.CmsService)
 
+	p.TriggerService.SetPipelineSvc(pipelineSvc)
+
 	// todo resolve cycle import here through better module architecture
 	pipelineFun := &reconciler.PipelineSvcFunc{
 		CronNotExecuteCompensate:                pipelineSvc.CronNotExecuteCompensateById,
@@ -196,10 +198,8 @@ func (p *provider) do() error {
 
 	// 加载 event manager
 	events.Initialize(bdl, publisher, dbClient)
-
 	// 同步 pipeline 表拆分后的 commit 字段和 org_name 字段
 	go pipelineSvc.SyncAfterSplitTable()
-
 	// aop
 	aop.Initialize(bdl, dbClient, reportSvc)
 

@@ -16,6 +16,7 @@ package pipeline
 
 import (
 	"context"
+	"github.com/erda-project/erda/modules/pipeline/providers/trigger"
 
 	"github.com/sirupsen/logrus"
 
@@ -32,6 +33,7 @@ type provider struct {
 	ReconcilerElection election.Interface  `autowired:"etcd-election@reconciler"`
 	GcElection         election.Interface  `autowired:"etcd-election@gc"`
 	server             *httpserver.Server
+	TriggerService     *trigger.TriggerService `autowired:"erda.core.pipeline.trigger.TriggerService"`
 }
 
 func (p *provider) Run(ctx context.Context) error {
