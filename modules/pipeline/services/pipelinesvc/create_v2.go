@@ -143,7 +143,7 @@ func (s *PipelineSvc) makePipelineFromRequestV2(req *apistructs.PipelineCreateRe
 
 	// 解析 pipeline yml 文件，生成最终 pipeline yml 文件
 	// 只解析最外层，获取 storage 和 cron 信息
-	pipelineYml, err := pipelineyml.New([]byte(req.PipelineYml), pipelineyml.WithEnvs(req.Envs))
+	pipelineYml, err := pipelineyml.New([]byte(req.PipelineYml), pipelineyml.WithEnvs(req.Envs), pipelineyml.WithLabels(req.Labels))
 	if err != nil {
 		return nil, apierrors.ErrParsePipelineYml.InternalError(err)
 	}
